@@ -3,7 +3,28 @@
 # An edit is an insertion, removal, or replacement of a character.
 
 def one_away(str1, str2)
-  # TODO: implement function
+  if str1.size < str2.size
+    shorter, larger = str1, str2
+  else
+   shorter, larger = str2, str1
+  end
+
+  return false if larger.size > shorter.size + 1
+
+  si, li = 0, 0
+  difference = false
+  while si < shorter.size && li < larger.size
+    if shorter[si] != larger[li]
+      return false if difference
+      difference = true
+
+      si = si + 1 if shorter.size == larger.size
+    else
+      si = si + 1
+    end
+    li = li + 1
+  end
+  true
 end
 
 require 'rspec'
@@ -41,5 +62,9 @@ RSpec.describe "one_away" do
 
   it "handles empty and non-empty string" do
     expect(one_away("", "a")).to be true
+  end
+
+  it "rejects strings with permutations" do
+    expect(one_away("abc", "cba")).to be false
   end
 end
