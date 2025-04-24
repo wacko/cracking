@@ -5,7 +5,12 @@
 
 # is_unique(string) => boolean
 def is_unique(str)
-  # TODO: implement function
+  chars = {}
+  str.each_char do |c|
+    return false if chars.has_key?(c)
+    chars[c] = true
+  end
+  true
 end
 
 require 'rspec'
