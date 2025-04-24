@@ -2,7 +2,12 @@
 # Given a string, write a function to check if it is a permutation of a palindrome.
 
 def palindrome_permutation(str)
-  # TODO: implement function
+  chars = str.downcase.chars.inject({}) do |memo, c|
+    memo[c] = memo[c].to_i.succ if c != " "
+    memo
+  end
+
+  chars.count{ |k,v| v.odd? } < 2
 end
 
 require 'rspec'
