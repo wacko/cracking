@@ -2,7 +2,20 @@
 # Given two strings, write a method to decide if one is a permutation of the other.
 
 def check_permutations(s1, s2)
-  # TODO: implement function
+  # Naive solution:
+  # s1.chars.sort == s2.chars.sort
+
+  chars1 = s1.chars.inject({}) do |memo, c|
+    count = memo[c] || 0
+    memo[c] = count + 1
+    memo
+  end
+  chars2 = s2.chars.inject({}) do |memo, c|
+    count = memo[c] || 0
+    memo[c] = count + 1
+    memo
+  end
+  chars1 == chars2
 end
 
 require 'rspec'
