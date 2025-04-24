@@ -4,7 +4,21 @@
 # and that you are given the "true" length of the string.
 
 def urlify(str)
-  # TODO: implement function
+  array = str.chars
+  spaces = array.count(" ")
+
+  (str.length-1).downto(0) do |i|
+    if array[i] != " "
+      array[i + spaces*2] = array[i]
+    else
+      spaces = spaces - 1
+      array[i + spaces*2] = "%"
+      array[i + spaces*2+1] = "2"
+      array[i + spaces*2+2] = "0"
+    end
+  end
+
+  array.join
 end
 
 require 'rspec'
