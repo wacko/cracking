@@ -2,7 +2,24 @@
 # Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0.
 
 def zero_matrix(matrix)
-  # TODO: implement function
+  size = matrix.size
+  rows = Array.new(size)
+  cols = Array.new(size)
+
+  size.times do |x|
+    size.times do |y|
+        if matrix[x][y] == 0
+        rows[x] = true
+        cols[y] = true
+      end
+    end
+  end
+
+  size.times do |x|
+    size.times do |y|
+      matrix[x][y] = 0 if rows[x] || cols[y]
+    end
+  end
 end
 
 require 'rspec'
