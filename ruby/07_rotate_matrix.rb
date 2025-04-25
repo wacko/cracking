@@ -2,7 +2,20 @@
 # Given an image represented by an NxN matrix, write a method to rotate the image by 90 degrees in place.
 
 def rotate_matrix(matrix)
-  # TODO: implement function
+  size = matrix.size
+  rows = size.ceildiv(2) - 1
+  cols = size.div(2) - 1
+  offset = matrix.size - 1
+
+  0.upto(rows) do |i|
+    0.upto(cols) do |j|
+      temp = matrix[i][j]
+      matrix[i][j] = matrix[offset-j][i]
+      matrix[offset-j][i] = matrix[offset-i][offset-j]
+      matrix[offset-i][offset-j] = matrix[j][offset-i]
+      matrix[j][offset-i] = temp
+    end
+  end
 end
 
 require 'rspec'
