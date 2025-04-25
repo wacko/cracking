@@ -3,7 +3,28 @@
 # If the compressed string is not smaller than the original, return the original string.
 
 def string_compression(str)
-  # TODO: implement function
+  length = str.length
+  return str if length < 3
+
+  i = 1
+  char = str[0]
+  count = 1
+  response = ""
+
+  while i < length-1
+    if str[i] == char
+      count = count + 1
+    else
+      response = response + "#{char}#{count}"
+      char = str[i]
+      count = 1
+    end
+
+    i = i + 1
+  end
+  response = response + "#{char}#{count+1}"
+
+  response.length < length ? response : str
 end
 
 require 'rspec'
