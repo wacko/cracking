@@ -4,7 +4,7 @@
 # Example: "waterbottle" is a rotation of "erbottlewat".
 
 def string_rotation(s1, s2)
-  # TODO: implement function
+  (s1 + s1).include?(s2)
 end
 
 require 'rspec'
