@@ -5,7 +5,23 @@
 # Example: 1 -> 2 -> 2 -> 2 -> 4
 
 def remove_dups(head)
-  # TODO: implement function
+  return nil if head.nil?
+
+  curr = head
+  next_one = head[:next]
+  values = Set.new
+  values.add(curr[:value])
+
+  while next_one
+    if values.include?(next_one[:value])
+      curr[:next] = next_one[:next]
+    else
+      values.add(next_one[:value])
+      curr = next_one
+    end
+    next_one = next_one[:next]
+  end
+  head
 end
 
 require 'rspec'
