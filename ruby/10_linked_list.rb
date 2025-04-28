@@ -14,7 +14,9 @@ class LinkedList
   end
 
   def push(value)
-    # TODO: implement push
+    node = Node.new(value)
+    @tail.next = node
+    @tail = node
   end
 
   def filter
