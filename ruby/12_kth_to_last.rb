@@ -2,7 +2,23 @@
 # Implement an algorithm to find the kth to last element of a singly linked list.
 
 def kth_to_last(head, k)
-  # TODO: implement function
+  return nil if k < 1
+  curr = head
+
+  k.times do
+    if curr
+      curr = curr[:next]
+    else
+      return nil
+    end
+  end
+
+  while curr
+    head = head[:next]
+    curr = curr[:next]
+  end
+
+  head
 end
 
 require 'rspec'
