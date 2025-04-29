@@ -4,7 +4,19 @@
 # Example: For a list a -> b -> c -> d -> e -> f, deleting node 'c' results in a -> b -> d -> e -> f.
 
 def delete_middle_node(head, position)
-  # TODO: implement function
+  return head if position < 1
+  curr = head
+
+  i = 0
+  while curr && position > i
+    prev, curr = curr, curr[:next]
+    i = i + 1
+  end
+
+  return head if curr.nil?
+
+  prev[:next] = curr[:next]
+  head
 end
 
 require 'rspec'
