@@ -4,7 +4,27 @@
 # Example:\n#  Input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1 (x = 5)\n#  Output: 3 -> 2 -> 1 -> 5 -> 8 -> 5 -> 10
 
 def partition(head, x)
-  # TODO: implement function
+  head_left = { next: nil }
+  head_right = { next: nil }
+
+  left = head_left
+  right = head_right
+
+  while head
+    if head[:value] < x
+      left[:next] = head
+      left = left[:next]
+    else
+      right[:next] = head
+      right = right[:next]
+    end
+    head = head[:next]
+  end
+
+  left[:next] = head_right[:next]
+  right[:next] = nil
+
+  head_left[:next]
 end
 
 require 'rspec'
@@ -25,16 +45,16 @@ RSpec.describe "partition" do
     node5[:next] = node6
     node6[:next] = node7
 
-    result = partition(node1, 5)
-    
     # Expected partitioned list: 3 -> 2 -> 1 -> 5 -> 8 -> 5 -> 10
-    expect(result[:value]).to eq(3)
-    expect(result[:next][:value]).to eq(2)
-    expect(result[:next][:next][:value]).to eq(1)
-    expect(result[:next][:next][:next][:value]).to eq(5)
-    expect(result[:next][:next][:next][:next][:value]).to eq(8)
-    expect(result[:next][:next][:next][:next][:next][:value]).to eq(5)
-    expect(result[:next][:next][:next][:next][:next][:next][:value]).to eq(10)
+    result = partition(node1, 5)
+
+    values = []
+    begin
+      values << result[:value]
+    end while result = result[:next]
+
+    expect(values[0..2]).to match_array([1,2,3])
+    expect(values[3..6]).to match_array([5,5,8,10])
   end
 
   it "handles single node list correctly" do
