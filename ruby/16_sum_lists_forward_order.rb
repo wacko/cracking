@@ -3,8 +3,49 @@
 # Input: (6 -> 1 -> 7) + (2 -> 9 -> 5) i.e., 617 + 295
 # Output: 9 -> 1 -> 2, i.e., 912.
 
+def length(list)
+  i = 0
+  while list
+    i = i + 1
+    list = list[:next]
+  end
+  i
+end
+
+def pad(list, count)
+  count.times do
+    list = { value: 0, next: list }
+  end
+  list
+end
+
+def recurse(list1, list2)
+  carry = 0
+  node = nil
+  if list1[:next]
+    node, carry = recurse(list1[:next], list2[:next])
+  end
+  
+  sum = list1[:value] + list2[:value] + carry
+  carry, value = sum.divmod(10)
+  
+  [{ value: value, next: node }, carry]
+end
+
 def sum_lists_forward_order(list1, list2)
-  # TODO: implement function
+  return nil if list1.nil? && list2.nil?
+
+  l1 = length(list1)
+  l2 = length(list2)
+
+  if l1 < l2
+    list1 = pad(list1, l2 - l1)
+  else
+    list2 = pad(list2, l1 - l2)
+  end
+
+  node, carry = recurse(list1, list2)
+  carry == 1 ? { value: 1, next: node } : node
 end
 
 require 'rspec'
