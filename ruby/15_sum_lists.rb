@@ -4,8 +4,52 @@
 # Write a function that adds the two numbers and returns the sum as a linked list.
 # Example: (7 -> 1 -> 6) + (5 -> 9 -> 2) represents 617 + 295, and the output should be 2 -> 1 -> 9 (912).
 
+# iterative algorithm
+def sum_lists_iterative(list1, list2)
+  carry = 0
+  output = { value: 0, next: nil }
+  current = output
+  while list1 || list2
+    a = list1 && list1[:value] || 0
+    b = list2 && list2[:value] || 0
+    carry, current[:value] = (a + b + carry).divmod(10)
+    list1 = list1[:next] if list1
+    list2 = list2[:next] if list2
+    if list1 || list2
+      current[:next] = { value: 0, next: nil }
+      current = current[:next]
+    end
+  end
+  current[:next] = { value: 1, next: nil } if carry == 1
+  output
+end
+
+# recursive algorithm
+def sum_lists_recursive(list1, list2, carry=0)
+  a, b = 0, 0
+  if list1
+    a = list1[:value]
+    list1 = list1[:next]
+  end
+  if list2
+    b = list2[:value]
+    list2 = list2[:next]
+  end
+
+  sum = a + b + carry
+  carry, value = sum.divmod(10)
+ 
+  if list1 || list2
+    { value: value, next: sum_lists_recursive(list1, list2, carry) }
+  else
+    carry_node = carry.zero? ? nil : { value: carry, next: nil }
+    { value: value, next: carry_node }
+  end
+end
+
 def sum_lists(list1, list2)
-  # TODO: implement function
+  # sum_lists_iterative(list1, list2)
+  sum_lists_recursive(list1, list2)
 end
 
 require 'rspec'
