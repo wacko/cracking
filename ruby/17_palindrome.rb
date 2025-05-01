@@ -1,8 +1,17 @@
 # 7. *Palindrome*:
 # Implement a function to check if a linked list is a palindrome.
 
+def reverse(head, &blk)
+  reverse(head[:next], &blk) if head[:next]
+  yield head[:value]
+end
+
 def is_palindrome(head)
-  # TODO: implement function
+  reverse(head) do |v|
+    return false if head[:value] != v
+    head = head[:next]
+  end
+  true
 end
 
 require 'rspec'
