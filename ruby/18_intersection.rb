@@ -2,8 +2,31 @@
 # Given two (singly) linked lists, determine if the two lists intersect.
 # Return the first intersecting node. The intersection is based on reference, not value.
 
+def length(list)
+  (1..).each do |i|
+    list = list[:next]
+    return i if list.nil?
+  end
+end
+
 def intersection(list1, list2)
-  # TODO: implement function
+  l1 = length(list1)
+  l2 = length(list2)
+
+  (l1-l2).abs.times do
+    if l1 < l2
+      list2 = list2[:next]
+    else
+      list1 = list1[:next]
+    end
+  end
+
+  while list1
+    return list1 if list1 == list2
+    list2 = list2[:next]
+    list1 = list1[:next]
+  end
+  nil
 end
 
 require 'rspec'
