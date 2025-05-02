@@ -8,7 +8,26 @@
 # Example: Input: A -> 8 -> C -> D -> E -> C (the same C earlier)  Output: C
 
 def detect_loop(head)
-  # TODO: implement function
+  return nil if head.nil? || head[:next].nil?
+
+  slow_pointer = head
+  fast_pointer = head
+
+  begin
+    slow_pointer = slow_pointer[:next]
+    fast_pointer = fast_pointer[:next][:next]
+  end while fast_pointer && fast_pointer[:next] && slow_pointer != fast_pointer
+
+  return nil if fast_pointer.nil? || fast_pointer[:next].nil?
+
+  slow_pointer = head
+
+  while slow_pointer != fast_pointer
+    slow_pointer = slow_pointer[:next]
+    fast_pointer = fast_pointer[:next]
+  end
+
+  slow_pointer
 end
 
 require 'rspec'
@@ -39,4 +58,9 @@ RSpec.describe "detect_loop" do
     # List with a loop: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 -> 11 -> 12 -> 13 -> 11
     loop_node = { value: 11, next: { value: 12, next: { value: 13, next: nil } } }
     loop_node[:next][:next][:next] = loop_node
-    list = { value: 1, next: { value: 2, next: { value: 3, next: { value: 4, next: { value: 5, next:
+    list = { value: 1, next: { value: 2, next: { value: 3, next: { value: 4, next: { value: 5, next: { value: 6, next: { value: 7, next: { value: 8, next: { value: 9, next: { value: 10, next: loop_node } } } } } } } } } }
+
+    result = detect_loop(list)
+    expect(result).to eq(loop_node)
+  end
+end
