@@ -5,16 +5,23 @@
 #
 
 class StackMin
+  def initialize
+    @stack = []
+  end
+
   def push(value)
-    # TODO: implement function
+    prev_min = @stack.empty? ? value : @stack.last.last
+    min = [value, prev_min].min
+    @stack << [value, min]
   end
 
   def pop
-    # TODO: implement function
+    return nil if @stack.empty?
+    @stack.pop.first
   end
 
   def min
-    # TODO: implement function
+    @stack.empty? ? nil : @stack.last.last
   end
 end
 
