@@ -12,15 +12,29 @@
 
 class StackOfPlates
   def initialize(capacity)
-    # TODO: implement function
+    @capacity = capacity
+    @stacks = [[]]
   end
 
   def push(value)
-    # TODO: implement function
+    last_stack = @stacks.last
+    if last_stack.size < @capacity
+      last_stack << value
+    else
+      @stacks << [value]
+    end
   end
 
   def pop
-    # TODO: implement function
+    return nil if @stacks.size == 1 && @stacks.last.empty?
+
+    last_stack = @stacks.last
+    if last_stack.empty?
+      @stacks.pop
+      last_stack = @stacks.last
+    end
+
+    last_stack.pop
   end
 end
 
