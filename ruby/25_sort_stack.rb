@@ -6,20 +6,29 @@
 # The stack supports the following operations: push, pop, peek, and empty?.
 
 class SortStack
+  def initialize
+    @stack = []
+    @aux = []
+  end
+
   def push(value)
-    # TODO: implement function
+    while @stack.last && @stack.last < value 
+      @aux << @stack.pop
+    end
+    @stack << value
+    @stack << @aux.pop while !@aux.empty?
   end
 
   def pop
-    # TODO: implement function
+    @stack.pop
   end
 
   def peek
-    # TODO: implement function
+    @stack.last
   end
 
   def empty?
-    # TODO: implement function
+    @stack.empty?
   end
 end
 
