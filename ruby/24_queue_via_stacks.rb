@@ -3,20 +3,29 @@
 # Implement a MyQueue class which implements a queue using two stacks.
 
 class MyQueue
+  def initialize
+    @in = []
+    @out = []
+  end
+
   def enqueue(value)
-    # TODO: implement function
+    @in << value
   end
 
   def dequeue
-    # TODO: implement function
+    if @out.empty?
+      @out << @in.pop while !@in.empty?
+    end
+
+    @out.pop
   end
 
   def peek
-    # TODO: implement function
+    @out.last || @in.first
   end
 
   def empty?
-    # TODO: implement function
+    @in.empty? && @out.empty?
   end
 end
 
