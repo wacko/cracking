@@ -13,32 +13,52 @@
 # AnimalType = "dog" | "cat"
 
 class Animal
-  attr_accessor :type
-  def initialize(type)
+  attr_accessor :type, :order
+  def initialize(type, order)
     @type = type
+    @order = order
   end
 end
 
 class AnimalShelter
+  def initialize
+    @cats = []
+    @dogs = []
+    @number = 1
+  end
+
   def enqueue(type)
-    # TODO: implement function
+    animal = Animal.new(type, @number)
+    if type == "dog"
+      @dogs << animal
+    else
+      @cats << animal
+    end
+    @number = @number + 1
   end
 
   def dequeue_any
-    # TODO: implement function
+    return dequeue_dog if @cats.empty?
+    cat = @cats.first
+    dog = @dogs.first
+    if cat.order < dog.order
+      dequeue_cat
+    else
+      dequeue_dog
+    end
   end
 
   def dequeue_dog
-    # TODO: implement function
+    @dogs.shift
   end
 
   def dequeue_cat
-    # TODO: implement function
+    @cats.shift
   end
 end
 
 
-RSpec.describe "" do
+RSpec.describe "AnimalShelter" do
   it "enqueue and dequeue elements from queue" do
     shelter = AnimalShelter.new
 
