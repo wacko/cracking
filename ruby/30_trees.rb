@@ -4,11 +4,22 @@ require_relative "./trees"
 
 class Tree
   def bfs(node, &block)
-    # TODO: implement function
+    yield node.value
+    nodes = []
+    nodes << node.left if node.left
+    nodes << node.right if node.right
+
+    while node = nodes.shift
+      yield node.value
+      nodes << node.left if node.left
+      nodes << node.right if node.right
+    end      
   end
 
   def dfs(node, &block)
-    # TODO: implement function
+    yield node.value
+    dfs(node.left, &block) if node.left
+    dfs(node.right, &block) if node.right
   end
 end
 
@@ -29,9 +40,9 @@ RSpec.describe "Trees" do
 
     tree = Tree.new
     order = []
-    tree.dfs(root) { |node| order.push(node) }
+    tree.dfs(root) { |value| order.push(value) }
 
-    expect(order.map &:value).to eq([1, 2, 3, 4, 5, 6, 7, 8])
+    expect(order).to eq([1, 2, 3, 4, 5, 6, 7, 8])
   end
 
   it "bfs navigates the tree in order" do
@@ -50,8 +61,8 @@ RSpec.describe "Trees" do
 
     tree = Tree.new
     order = []
-    tree.bfs(root) { |node| order.push(node) }
+    tree.bfs(root) { |value| order.push(value) }
 
-    expect(order.map &:value).to eq([1, 2, 3, 4, 5, 6, 7, 8])
+    expect(order).to eq([1, 2, 3, 4, 5, 6, 7, 8])
   end
 end
