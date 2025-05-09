@@ -5,8 +5,14 @@
 
 GraphNode = Struct.new("GraphNode", :value, :neighbors)
 
-def has_route_between_nodes(start, last)
-  # TODO: implement function
+def has_route_between_nodes(start, last, visited_nodes = Set.new)
+  visited_nodes << start
+  return true if start == last
+
+  route = start.neighbors.find do |node|
+    has_route_between_nodes(node, last, visited_nodes) unless visited_nodes.member?(node)
+  end
+  !route.nil?
 end
 
 
