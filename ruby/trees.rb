@@ -5,6 +5,12 @@ class TreeNode
     @left = left
     @right = right
   end
+
+  def ==(other)
+    @value == other.value &&
+    @left == other.left &&
+    @right == other.right
+  end
 end
 
 class ListNode
@@ -12,5 +18,10 @@ class ListNode
   def initialize(value, next_node: nil)
     @value = value
     @next_node = next_node
+  end
+
+  def ==(other)
+    @value == other.value &&
+    @next_node == other.next_node
   end
 end

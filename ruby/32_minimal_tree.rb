@@ -17,9 +17,15 @@
 require_relative "./trees"
 
 def minimal_tree(sorted_array)
-  # TODO: implement function
-end
+  return nil if sorted_array.empty?
+  size = sorted_array.length
+  pivot = size / 2
 
+  left = minimal_tree sorted_array[...pivot] if size >= 2
+  right = minimal_tree sorted_array[pivot+1..] if size >= 3
+
+  TreeNode.new(sorted_array[pivot], left: left, right: right)
+end
 
 RSpec.describe "minimal_tree" do
   it "creates minimal height BST from sorted array" do
@@ -60,7 +66,7 @@ RSpec.describe "minimal_tree" do
     expect(minimal_tree(sorted_array)).to eq(expected_tree)
   end
 
-  it "returns toBeUndefined for empty array" do
+  it "returns nil for empty array" do
     sorted_array = []
     expect(minimal_tree(sorted_array)).to be_nil
   end
