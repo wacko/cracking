@@ -6,8 +6,24 @@
 
 require_relative "./trees"
 
+def list_of_depths_rec(tree_node, level, list)
+  this_level = list[level]
+
+  list_node = ListNode.new(tree_node.value)
+  if this_level
+    this_level = this_level.next_node while this_level.next_node
+    this_level.next_node = list_node
+  else
+    list[level] = list_node
+  end
+
+  list_of_depths_rec(tree_node.left, level+1, list) if tree_node.left
+  list_of_depths_rec(tree_node.right, level+1, list) if tree_node.right
+  list
+end
+
 def list_of_depths(root)
-  # TODO: implement function
+  list_of_depths_rec(root, 0, [])
 end
 
 
