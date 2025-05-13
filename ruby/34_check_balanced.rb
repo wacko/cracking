@@ -6,8 +6,15 @@
 
 require_relative "./trees"
 
+def height(tree)
+  return 0 if tree.nil?
+  [height(tree.left), height(tree.right)].max + 1
+end
+
 def check_balanced(tree)
-  # TODO: implement function
+  return true if tree.nil?
+  return false unless check_balanced(tree.left) && check_balanced(tree.right)
+  (height(tree.left) - height(tree.right)).abs <= 1
 end
 
 RSpec.describe "check_balanced" do
