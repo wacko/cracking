@@ -4,8 +4,22 @@
 
 require_relative "./trees"
 
+def dfs(node, &block)
+  dfs(node.left, &block) if node.left
+  yield node.value
+  dfs(node.right, &block) if node.right
+end
+
 def validate_bst(node)
-  # TODO: implement function
+  last_node = nil
+  dfs(node) do |val|
+    if last_node.nil? || last_node <= val
+      last_node = val
+    else
+      return false
+    end
+  end
+  true
 end
 
 
