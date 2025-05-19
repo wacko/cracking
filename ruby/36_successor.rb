@@ -10,7 +10,18 @@ class TreeNode
 end
 
 def successor(node)
-  # TODO: implement function
+  candidate = nil
+  if node.right
+    candidate = node.right
+    candidate = candidate.left while candidate.left
+  else
+    candidate = node.parent
+    while candidate && candidate.left != node
+      node = candidate
+      candidate = node.parent
+    end
+  end
+  candidate
 end
 
 
@@ -49,7 +60,7 @@ RSpec.describe "successor" do
     expect(successor(node8)).to be_nil
   end
 
-  it "returns undefined for node without successor" do
+  it "returns nil for node without successor" do
     node1 = TreeNode.new(1)
     expect(successor(node1)).to be_nil
   end
