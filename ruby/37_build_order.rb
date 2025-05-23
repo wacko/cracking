@@ -13,9 +13,42 @@
 # Output: e, f, a, b, d, c
 # ```
 
+class Project
+  attr_reader :name, :depends_on, :required_for
+
+  def initialize(name)
+    @name = name
+    @depends_on = Set.new
+    @required_for = Set.new
+  end
+end
 # build_order(projects: string[], dependencies: string[][]) => string[] | string
 def build_order(projects, dependencies)
-  # TODO: implement function
+  list = {}
+  projects.each { |p| list[p] = Project.new(p) }
+
+  dependencies.each do |a, b|
+    raise "No valid build order exists" unless list[a] && list[b]
+    list[a].required_for << list[b]
+    list[b].depends_on << list[a]
+  end
+
+  order = []
+  order_size = nil
+  while order_size != order.size
+    order_size = order.size
+    list.each do |key, project|
+      if project.depends_on.empty?
+        order << project.name
+        project.required_for.each do |other|
+          other.depends_on.delete(project)
+        end
+        list.delete(key)
+      end
+    end
+  end
+  raise "No valid build order exists" unless list.empty?
+  order
 end
 
 
@@ -39,13 +72,24 @@ RSpec.describe "build_order" do
     ])
   end
 
-  it "throws error for no valid order" do
+  it "throws error for no valid order (non existing dependencies)" do
     projects = ["a", "b", "c", "d", "e"]
     dependencies = [
       ["a", "d"],
       ["f", "b"],
       ["b", "d"],
       ["f", "a"],
+      ["d", "c"],
+    ]
+    expect{ build_order(projects, dependencies) }.to raise_error("No valid build order exists")
+  end
+
+  it "throws error for no valid order (circular dependencies)" do
+    projects = ["a", "b", "c", "d", "e"]
+    dependencies = [
+      ["a", "d"],
+      ["d", "a"],
+      ["b", "d"],
       ["d", "c"],
     ]
     expect{ build_order(projects, dependencies) }.to raise_error("No valid build order exists")
