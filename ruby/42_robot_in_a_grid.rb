@@ -8,9 +8,28 @@
 # type Grid = boolean[][]
 # type Path = Array<[number, number]>
 
-# def robot_in_a_grid(grid: Grid) => [number, number][] | false
-def robot_in_a_grid(grid)
-  # TODO: implement function
+# def robot_in_a_grid(grid: Grid, col:number, row:number) => [number, number][] | false
+def robot_in_a_grid(grid, col=0, row=0)
+  return false if grid[col][row] == false
+  rows = grid.size
+  cols = grid[0].size
+  return [[col,row]] if col == cols-1 && row == rows-1 && grid[col][row] == true
+
+  if col < cols-1
+    if path = robot_in_a_grid(grid, col+1, row)
+      path.unshift([row, col])
+      return path
+    end
+  end
+
+  if row < rows-1
+    if path = robot_in_a_grid(grid, col, row+1)
+      path.unshift([row, col])
+      return path
+    end
+  end
+
+  return false
 end
 
 
