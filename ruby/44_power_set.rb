@@ -8,8 +8,20 @@
 
 
 # power_set(set: number[]): number[][]
+def power_set_rec(current, others, solutions)
+  if others.any?
+    rest = others.dup
+    first = rest.shift
+    power_set_rec(current + [first], rest, solutions)
+    power_set_rec(current, rest, solutions)
+  else
+    solutions << current
+  end
+end
 def power_set(set)
-  # TODO: implement function
+  solutions = []
+  power_set_rec([], set, solutions)
+  solutions
 end
 
 def sorted(power_set)
