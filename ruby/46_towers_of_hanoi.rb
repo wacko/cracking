@@ -13,21 +13,34 @@
 
 # type Tower = number[]
 
+
+def move(orig, dest, level)
+  dest << orig.pop
+end
+
+def move_rec(orig, dest, buffer, level)
+  move_rec(orig, buffer, dest, level-1) if level > 1
+  move(orig, dest, level)
+  move_rec(buffer, dest, orig, level-1) if level > 1
+end
+
 # towers_of_hanoi(n: number): [Tower, Tower, Tower]
 def towers_of_hanoi(n)
-  # TODO: implement function
+  towers = [n.downto(1).map { |i| i }, [], []]
+  move_rec(*towers, n)
+  towers
 end
 
 
 RSpec.describe "towers_of_hanoi" do
   it "returns correct tower configuration after moving disks" do
     result1 = towers_of_hanoi(3)
-    expect(result1).to eq([[], [], [3,2,1]])
+    expect(result1).to eq([[], [3,2,1], []])
 
     result2 = towers_of_hanoi(4)
-    expect(result2).to eq([[], [], [4, 3, 2, 1]])
+    expect(result2).to eq([[], [4, 3, 2, 1], []])
 
     result3 = towers_of_hanoi(5)
-    expect(result3).to eq([ [], [], [5, 4, 3, 2, 1]])
+    expect(result3).to eq([ [], [5, 4, 3, 2, 1], []])
   end
 end
