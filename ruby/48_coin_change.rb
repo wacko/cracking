@@ -12,7 +12,24 @@
 
 # coin_change(amount: number, coins: Array<number>): number
 def coin_change(amount, coins)
-  # TODO: implement function
+  total = 0
+  coin_change_rec(amount, coins.sort.reverse) do
+    total = total + 1
+  end
+  total
+end
+
+def coin_change_rec(amount, coins, &blk)
+  return if coins.size == 0
+
+  remainder = amount - coins.first
+  if remainder > 0
+    coin_change_rec(remainder, coins, &blk)
+  elsif remainder == 0
+    yield
+  end
+
+  coin_change_rec(amount, coins[1..-1], &blk)
 end
 
 RSpec.describe "Coin Change" do
