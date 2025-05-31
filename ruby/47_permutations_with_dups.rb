@@ -1,16 +1,43 @@
 # 7.Permutations without Dups: Write a method to compute all permutations of a string of unique characters.
 
+def permutations_without_dups_rec(curr, rest, permutations)
+  if rest.size > 1
+    rest.each do |c|
+      permutations_without_dups_rec(curr + c, rest.reject{|x| x == c}, permutations)
+    end
+  else
+    permutations << curr + rest[0]
+  end
+end
+
 # permutations_without_dups(input: string): string[]
 def permutations_without_dups(input)
-  # TODO: implement function
+  permutations = []
+  permutations_without_dups_rec("", input.chars, permutations)
+  permutations
 end
 
 
 # *Permutations with Dups*: Write a method to compute all permutations of a string whose characters are not necessarily unique. The list of permutations should not have duplicates.
 
+def permutations_with_dups_rec(curr, rest, permutations)
+  if rest.size > 1
+    rest.uniq.each do |c|
+      pos = rest.find_index(c)
+      new_chars = []
+      rest.each_with_index{|e,i| new_chars << e if i != pos}
+      permutations_with_dups_rec(curr + c, new_chars, permutations)
+    end
+  else
+    permutations << curr + rest[0]
+  end
+end
+
 # permutations_with_dups(input: string): string[]
 def permutations_with_dups(input)
-  # TODO: implement function
+  permutations = []
+  permutations_with_dups_rec("", input.chars, permutations)
+  permutations
 end
 
 
