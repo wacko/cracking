@@ -4,7 +4,15 @@
 // What if you cannot use additional data structures?
 
 export default function isUnique(str: string): boolean {
-  // TODO: implement function
+  const chars: Set<string> = new Set();
+
+  for (let i = 0; i < str.length; i++) {
+    if (chars.has(str[i])) {
+      return false;
+    } else {
+      chars.add(str[i]);
+    }
+  }
   return true;
 }
 
