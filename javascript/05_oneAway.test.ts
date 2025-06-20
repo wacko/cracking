@@ -5,7 +5,30 @@
 // Given two strings, write a function to check if they are one edit (or zero edits) away.
 
 export default function isOneAway(str1: string, str2: string): boolean {
-  // TODO: implement function
+  if  (Math.abs(str1.length - str2.length) > 1) { return false }
+
+  let pos1 = 0
+  let pos2 = 0
+  let changed = false
+
+  while (pos1 < str1.length && pos2 < str2.length) {
+    if (str1[pos1] == str2[pos2]) {
+      pos1++
+      pos2++
+    } else if (changed) {
+      return false
+    } else if (str1.length > str2.length) {
+      changed = true
+      pos1++
+    } else if (str1.length < str2.length) {
+      changed = true
+      pos2++
+    } else {
+      changed = true
+      pos1++
+      pos2++
+    }
+  }
   return true;
 }
 
