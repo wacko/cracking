@@ -5,7 +5,26 @@
 type Matrix = number[][]
 
 export default function zeroMatrix (matrix: Matrix) {
-  // TODO: implement function
+  const cols: Set<number> = new Set()
+  const rows: Set<number> = new Set()
+  const size = matrix.length
+
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (matrix[i][j] == 0) {
+        rows.add(i)
+        cols.add(j)
+      }
+    }
+  }
+
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (rows.has(i) || cols.has(j)) {
+        matrix[i][j] = 0
+      }
+    }
+  }
 }
 
 describe("08 - zeroMatrix", () => {
