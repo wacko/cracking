@@ -10,8 +10,20 @@
 // ```
 
 export default function palindromePermutation (str: string): boolean {
-  // TODO: implement function
-  return true;
+  const chars: Record<string, number> = {}
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i].toLowerCase()
+    
+    if (char == " ") { continue }
+    if (chars[char]) {
+      chars[char] += 1
+    } else {
+      chars[char] = 1
+    }
+  }
+
+  return Object.values(chars).filter((count) => count % 2 != 0) <= 1
 }
 
 describe("04 - palindromePermutation", () => {
