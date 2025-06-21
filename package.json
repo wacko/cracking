@@ -4,13 +4,13 @@
   "description": "Crackin the coding interview problems",
   "main": "index.js",
   "scripts": {
-    "test": "vitest ./*",
-    "test-coding": "vitest ./coding/__tests__/*",
-    "strings": "vitest ./0* --reporter=default",
-    "lists": "vitest ./1* --reporter=default",
-    "stacks": "vitest ./2* --reporter=default",
-    "trees": "vitest ./3* --reporter=default",
-    "recursion": "vitest ./4* --reporter=default"
+    "test": "vitest ./javascript/*",
+    "test-coding": "vitest ./javascript/*",
+    "strings": "vitest ./javascript/0* --reporter=default --reporter=./silverReporter.ts",
+    "lists": "vitest ./javascript/1* --reporter=default --reporter=./silverReporter.ts",
+    "stacks": "vitest ./javascript/2* --reporter=default --reporter=./silverReporter.ts",
+    "trees": "vitest ./javascript/3* --reporter=default --reporter=./silverReporter.ts",
+    "recursion": "vitest ./javascript/4* --reporter=default --reporter=./silverReporter.ts"
   },
   "author": "",
   "license": "MIT",
